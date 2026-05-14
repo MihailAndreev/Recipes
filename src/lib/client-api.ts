@@ -9,6 +9,11 @@ type RecipeListResponse = {
   paging: Paging;
 };
 
+type UserListResponse = {
+  data: User[];
+  paging: Paging;
+};
+
 type RecipeResponse = {
   data: Recipe;
 };
@@ -142,6 +147,55 @@ export function uploadRecipePhoto(id: number, file: File, token: string | null) 
 
 export function removeRecipePhoto(id: number, token: string | null) {
   return apiFetch<RecipeResponse & { photoUrl: null }>(`/api/recipes/${id}/photo`, {
+    method: "DELETE",
+    headers: getAuthHeaders(token),
+  });
+}
+
+export function getAdminRecipes(token: string | null) {
+  return apiFetch<RecipeListResponse>("/api/admin/recipes?page=1&pageSize=100", {
+    headers: getAuthHeaders(token),
+  });
+}
+
+export function updateAdminRecipe(id: number, payload: RecipePayload, token: string | null) {
+  return apiFetch<RecipeResponse>(`/api/admin/recipes/${id}`, {
+    method: "PUT",
+    headers: getAuthHeaders(token),
+    body: JSON.stringify(payload),
+  });
+}
+
+export function deleteAdminRecipe(id: number, token: string | null) {
+  return apiFetch<RecipeResponse>(`/api/admin/recipes/${id}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(token),
+  });
+}
+
+export function getAdminUsers(token: string | null) {
+  return apiFetch<UserListResponse>("/api/admin/users?page=1&pageSize=100", {
+    headers: getAuthHeaders(token),
+  });
+}
+
+export function updateAdminUser(
+  id: number,
+  payload: {
+    email?: string;
+    isAdmin?: boolean;
+  },
+  token: string | null,
+) {
+  return apiFetch<{ data: User }>(`/api/admin/users/${id}`, {
+    method: "PATCH",
+    headers: getAuthHeaders(token),
+    body: JSON.stringify(payload),
+  });
+}
+
+export function deleteAdminUser(id: number, token: string | null) {
+  return apiFetch<{ data: User }>(`/api/admin/users/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(token),
   });

@@ -10,6 +10,7 @@ export const authCookieName = "auth_token";
 export type AuthUser = {
   id: number;
   email: string;
+  isAdmin: boolean;
 };
 
 type TokenPayload = JwtPayload & {
@@ -67,6 +68,7 @@ export async function getCurrentUser(request: Request) {
       .select({
         id: users.id,
         email: users.email,
+        isAdmin: users.isAdmin,
       })
       .from(users)
       .where(eq(users.id, payload.userId))

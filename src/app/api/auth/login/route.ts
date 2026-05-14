@@ -33,6 +33,7 @@ export async function POST(request: Request) {
   const user = {
     id: userWithPassword.id,
     email: userWithPassword.email,
+    isAdmin: userWithPassword.isAdmin,
   };
   const token = signAuthToken(user);
   const response = Response.json({ user, token });

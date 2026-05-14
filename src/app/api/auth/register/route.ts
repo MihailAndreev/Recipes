@@ -38,6 +38,7 @@ export async function POST(request: Request) {
     .returning({
       id: users.id,
       email: users.email,
+      isAdmin: users.isAdmin,
     });
 
   const token = signAuthToken(user);

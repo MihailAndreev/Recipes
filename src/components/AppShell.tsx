@@ -45,6 +45,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 >
                   New Recipe
                 </Link>
+                {user.isAdmin ? (
+                  <Link
+                    className="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800"
+                    href="/admin"
+                  >
+                    Admin Panel
+                  </Link>
+                ) : null}
                 <button
                   className="rounded-md border border-zinc-300 px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100"
                   onClick={handleLogout}
